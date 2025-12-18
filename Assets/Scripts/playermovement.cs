@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class playermovement : MonoBehaviour
 {
-
+    public static playermovement Instance;
 
 
     [SerializeField] float rotationSpeed = 1.0f;
@@ -15,9 +15,11 @@ public class playermovement : MonoBehaviour
 
 
 
+
     void Start()
 
     {
+
         animator = GetComponent<Animator>();
 
 
