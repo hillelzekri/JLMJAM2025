@@ -11,8 +11,10 @@ public class playermovement : MonoBehaviour
     [SerializeField] float Speed = 1.0f;
 
     [SerializeField] Transform CameraTransform;
+    [SerializeField] float timeBetweenSteps = 0.5f;
     Animator animator;
     Rigidbody rb;
+    private float stepTimer = 0;
 
 
 
@@ -20,25 +22,26 @@ public class playermovement : MonoBehaviour
     void Start()
 
     {
-
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
 
     }
-    //private void Update()
-    //{
-    //    float movex = Input.GetAxisRaw("Horizontal");
-    //    float movez = Input.GetAxisRaw("Vertical");
+    private void Update()
+    {
+        float movex = Input.GetAxisRaw("Horizontal");
+        float movez = Input.GetAxisRaw("Vertical");
 
-
-    //    Vector3 movement = new Vector3(movex, 0, movez);
-
-
-    //    movement = Quaternion.AngleAxis(CameraTransform.rotation.eulerAngles.y, Vector3.up) * movement;
-    //    movement.Normalize();
-    //    transform.Translate(movement * Speed * Time.deltaTime, Space.World);
-    //}
+        if (movex != 0 || movez != 0)
+        {
+            stepTimer -= Time.deltaTime;
+            if (stepTimer < 0)
+            {
+                soundManager.Instance.playsounds("footstep");
+                stepTimer = timeBetweenSteps;
+            }
+        }
+    }
     void FixedUpdate()
     {
         float x = Input.GetAxisRaw("Horizontal");

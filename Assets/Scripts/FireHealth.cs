@@ -12,6 +12,10 @@ public class FireHealth : MonoBehaviour
     [SerializeField] Light candleLight;
     [SerializeField] float maxintesenty = 1.5f;
     [SerializeField] float lifeTime = 10f;
+    public static int candleCollectedAmunt = 0;
+    public static List<GameObject> candles = new List<GameObject>();
+    [SerializeField] candleAnable CandleAnable; 
+
 
 
     private float _timePassed;
@@ -22,6 +26,7 @@ public class FireHealth : MonoBehaviour
         remainingTime = lifeTime;
         candleLight.intensity = maxintesenty;
         health = maxhealth;
+
 
     }
     private void Update()
@@ -38,11 +43,19 @@ public class FireHealth : MonoBehaviour
         {
             remainingTime = lifeTime;
             candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
+           
         }
         if (other.gameObject.CompareTag("Campfire"))
         {
             remainingTime = lifeTime;
             candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
+            
+            foreach (GameObject candle in candles)
+            {
+                CandleAnable.AddCandle();
+                candle.SetActive(false);
+            }
+            candles.Clear();
         }
     }
 
@@ -55,6 +68,12 @@ public class FireHealth : MonoBehaviour
         }
    
     }
-  
-  
+    public void  CandleCollcted(GameObject candle)
+    {
+        candleCollectedAmunt++;
+        print("Candle Collected"+ candleCollectedAmunt);
+        candles.Add(candle);
+
+
+    } 
 }
