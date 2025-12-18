@@ -14,7 +14,9 @@ public class FireHealth : MonoBehaviour
     [SerializeField] float lifeTime = 10f;
     public static int candleCollectedAmunt = 0;
     public static List<GameObject> candles = new List<GameObject>();
-    [SerializeField] candleAnable CandleAnable; 
+    [SerializeField] candleAnable CandleAnable;
+    [SerializeField] ParticleSystem fireParticles;
+    private float _fireEmission;
 
 
 
@@ -25,6 +27,7 @@ public class FireHealth : MonoBehaviour
         maxhealth = 1;
         remainingTime = lifeTime;
         candleLight.intensity = maxintesenty;
+        _fireEmission = fireParticles.emission.rateOverTime.constant;
         health = maxhealth;
 
 
@@ -34,6 +37,7 @@ public class FireHealth : MonoBehaviour
 
         healthReduse();
         candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
+        fireParticles.emissionRate = (remainingTime / lifeTime) * _fireEmission;
     }
   
 

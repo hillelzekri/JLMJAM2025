@@ -15,14 +15,17 @@ public class OnSeenFollow : MonoBehaviour
     bool isCumpted= false;
     [SerializeField] Light candleLight;
    [SerializeField] FireHealth fireHealth;
+    [SerializeField] GameObject idlecandle;
+    [SerializeField] GameObject sadcandle;
 
     private bool collected = false;
 
 
     void Start()
     {
-    
-
+        sadcandle.SetActive(true);
+        idlecandle.SetActive(false);
+        candleLight.intensity = 0f;
         if (Player == null)
         {
             print("Player not found");
@@ -50,11 +53,14 @@ public class OnSeenFollow : MonoBehaviour
             if (Vector3.Distance(transform.position, Player.position) <= Radius)
             {
              
-                candleLight.intensity = 1.5f;
+                
                 if (!collected)
                 {
                     fireHealth.CandleCollcted(gameObject);
                     collected = true;
+                    sadcandle.SetActive(false);
+                    idlecandle.SetActive(true);
+                    candleLight.intensity = 1.5f;
                 }
 
             }
