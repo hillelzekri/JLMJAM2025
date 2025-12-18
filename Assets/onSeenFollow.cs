@@ -11,9 +11,12 @@ public class OnSeenFollow : MonoBehaviour
    [SerializeField] Transform Player;
     public bool PlayerSeen = false;
     [SerializeField] float Radius = 1;
+    [SerializeField] float DistanceFromPlayer = 2;
     bool isCumpted= false;
     [SerializeField] Light candleLight;
+   [SerializeField] FireHealth fireHealth;
 
+    private bool collected = false;
 
 
     void Start()
@@ -36,18 +39,29 @@ public class OnSeenFollow : MonoBehaviour
         {
             PlayerSeen = true;
         }
-        follow(); 
+        follow();
+        
     }
 
    public void follow()
     {
         if (PlayerSeen && !isCumpted)
         {
-            if (Vector3.Distance(transform.position, Player.position) >= Radius)
+            if (Vector3.Distance(transform.position, Player.position) <= Radius)
+            {
+             
+                candleLight.intensity = 1.5f;
+                if (!collected)
+                {
+                    fireHealth.CandleCollcted(gameObject);
+                    collected = true;
+                }
+
+            }
+            if (Vector3.Distance(transform.position, Player.position) >= DistanceFromPlayer)
             {
                 Vector3 direction = (Player.transform.position - transform.position);
                 transform.position = Vector3.MoveTowards(transform.position, transform.position + direction, Time.deltaTime * speed);
-                candleLight.intensity = 1.5f;
             }
         }
     }
@@ -60,5 +74,6 @@ public class OnSeenFollow : MonoBehaviour
         isCumpted = true;
         return;
     }
+
 }
 
