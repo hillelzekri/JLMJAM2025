@@ -16,6 +16,7 @@ public class FireHealth : MonoBehaviour
     public static List<GameObject> candles = new List<GameObject>();
     [SerializeField] candleAnable CandleAnable;
     [SerializeField] ParticleSystem fireParticles;
+    [SerializeField] GameObject directionalLight;
     private float _fireEmission;
 
 
@@ -29,6 +30,8 @@ public class FireHealth : MonoBehaviour
         candleLight.intensity = maxintesenty;
         _fireEmission = fireParticles.emission.rateOverTime.constant;
         health = maxhealth;
+
+        directionalLight.SetActive(false);
 
 
     }
