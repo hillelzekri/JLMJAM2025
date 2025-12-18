@@ -62,7 +62,6 @@ public class OnSeenFollow : MonoBehaviour
                     idlecandle.SetActive(true);
                     candleLight.intensity = 1.5f;
                 }
-
             }
             if (Vector3.Distance(transform.position, Player.position) >= DistanceFromPlayer)
             {

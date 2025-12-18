@@ -18,6 +18,7 @@ public class FireHealth : MonoBehaviour
     [SerializeField] ParticleSystem fireParticles;
     [SerializeField] GameObject directionalLight;
     private float _fireEmission;
+    public static int ArielCounter = 0;
 
 
 
@@ -56,13 +57,21 @@ public class FireHealth : MonoBehaviour
         {
             remainingTime = lifeTime;
             candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
-            
-            foreach (GameObject candle in candles)
+
+            if (candles != null && candles.Count > 0)
             {
-                CandleAnable.AddCandle();
-                candle.SetActive(false);
+                foreach (GameObject candle in candles)
+                {
+                    CandleAnable.AddCandle();
+                    candle.SetActive(false);
+                    maxhealth += 0.5f;
+                    health = maxhealth;
+                    print("ArielCounterIs: " + ArielCounter);
+                }
+                //print("bbbbbbbbbbbbbbbbbbbb");
+
+                candles.Clear();
             }
-            candles.Clear();
         }
     }
 
