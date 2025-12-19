@@ -70,7 +70,7 @@ public class playermovement : MonoBehaviour
             stepTimer -= Time.deltaTime;
             if (stepTimer < 0)
             {
-                soundManager.Instance.playsounds("footstep");
+                //soundManager.Instance.playsounds("footstep");
                 stepTimer = timeBetweenSteps;
             }
         }

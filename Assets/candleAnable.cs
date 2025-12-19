@@ -19,6 +19,7 @@ public class candleAnable : MonoBehaviour
         {
             i++;
         }
+        //candoles[i].SetActive(true);
         candoles[i].SetActive(true);
         if (i == candoles.Length - 1)
         {
@@ -39,6 +40,7 @@ public class candleAnable : MonoBehaviour
         }
         return true;
     }
+
 
  
 }
