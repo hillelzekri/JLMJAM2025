@@ -1,12 +1,12 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class FireHealth : MonoBehaviour
 {
     
-   public float maxhealth;
-    public static float health;
+   
+   
 
     [SerializeField] float remainingTime;
     [SerializeField] Light candleLight;
@@ -18,6 +18,7 @@ public class FireHealth : MonoBehaviour
     [SerializeField] ParticleSystem fireParticles;
     [SerializeField] GameObject directionalLight;
     private float _fireEmission;
+    [SerializeField] Transform lustCheckPoint;
     public static int ArielCounter = 0;
 
 
@@ -26,11 +27,11 @@ public class FireHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        maxhealth = 1;
+        
         remainingTime = lifeTime;
         candleLight.intensity = maxintesenty;
         _fireEmission = fireParticles.emission.rateOverTime.constant;
-        health = maxhealth;
+        
 
         directionalLight.SetActive(false);
 
@@ -42,6 +43,7 @@ public class FireHealth : MonoBehaviour
         healthReduse();
         candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
         fireParticles.emissionRate = (remainingTime / lifeTime) * _fireEmission;
+     
     }
   
 
@@ -77,12 +79,24 @@ public class FireHealth : MonoBehaviour
 
     void healthReduse()
     {
+       
         remainingTime -= Time.deltaTime;
-        if (remainingTime == Time.deltaTime)
-        {
-            health -= 5; 
+     
+        if (remainingTime <= 0 )
+            {
+            UIManager.Instance.ShowRespawnPanel();
+            Invoke(nameof(Respawnplayer),2f);
         }
+        
    
+    }
+    void Respawnplayer()
+    {
+       transform.position = lustCheckPoint.position;
+        remainingTime = lifeTime;
+        candleLight.intensity = maxintesenty;
+        UIManager.Instance.HideRespawnPanel();
+
     }
     public void  CandleCollcted(GameObject candle)
     {

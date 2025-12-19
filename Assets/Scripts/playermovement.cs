@@ -1,14 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.UIElements;
+
+
 
 public class playermovement : MonoBehaviour
 {
     public static playermovement Instance;
 
 
-    [SerializeField] float rotationSpeed = 1.0f;
+    [SerializeField] float rotationSpeed = 360f;
     [SerializeField] float Speed = 1.0f;
 
     [SerializeField] Transform CameraTransform;
@@ -16,7 +16,7 @@ public class playermovement : MonoBehaviour
     Animator animator;
     Rigidbody rb;
     private float stepTimer = 0;
-
+    public float jumpForce = 5f;
 
 
 
@@ -30,8 +30,40 @@ public class playermovement : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.anyKey)
+        {
+            UIManager.Instance.HideStartManu();
+        }
+        Move();
+       
+    }
+
+    private void Jump()
+    {
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
+        soundManager.Instance.playsounds("JumpingClip");
+    }
+    private void Move()
+    {
         float movex = Input.GetAxisRaw("Horizontal");
         float movez = Input.GetAxisRaw("Vertical");
+
+
+        Vector3 movement = new Vector3(movex, 0, movez);
+
+
+        movement = Quaternion.AngleAxis(CameraTransform.rotation.eulerAngles.y, Vector3.up) * movement;
+        movement.Normalize();
+        transform.Translate(movement * Speed * Time.deltaTime, Space.World);
+
+
+        if (movement != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
+
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        }
+
 
         if (movex != 0 || movez != 0)
         {
@@ -45,13 +77,10 @@ public class playermovement : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-
-        Vector3 move = new Vector3(x, 0, z);
-        move = Quaternion.AngleAxis(CameraTransform.eulerAngles.y, Vector3.up) * move;
-        move.Normalize();
-
-        rb.MovePosition(rb.position + move * Speed * Time.fixedDeltaTime);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+           
+        }
     }
 }

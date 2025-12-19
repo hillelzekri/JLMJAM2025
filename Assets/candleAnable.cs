@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class candleAnable : MonoBehaviour
@@ -11,6 +10,8 @@ public class candleAnable : MonoBehaviour
     {
         if (AllLighted())
         {
+           
+           
             return;
         }
         int i = 0;
@@ -19,7 +20,13 @@ public class candleAnable : MonoBehaviour
             i++;
         }
         candoles[i].SetActive(true);
-
+        if (i == candoles.Length - 1)
+        {
+            UIManager.Instance.ShowEndMenu();
+            //end the game
+            return;
+        }
+        print(AllLighted());
     }
     private bool AllLighted()
     {
