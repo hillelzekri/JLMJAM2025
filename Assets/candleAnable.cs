@@ -18,6 +18,7 @@ public class candleAnable : MonoBehaviour
         {
             i++;
         }
+        //candoles[i].SetActive(true);
         candoles[i].SetActive(true);
 
     }
@@ -32,6 +33,7 @@ public class candleAnable : MonoBehaviour
         }
         return true;
     }
+
 
  
 }

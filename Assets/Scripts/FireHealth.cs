@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class FireHealth : MonoBehaviour
 {
@@ -11,28 +13,59 @@ public class FireHealth : MonoBehaviour
     [SerializeField] float remainingTime;
     [SerializeField] Light candleLight;
     [SerializeField] float maxintesenty = 1.5f;
-    [SerializeField] float lifeTime = 10f;
+    [SerializeField] float lifeTime = 30f;
+    [SerializeField] float multiplier = 1.1f;
     public static int candleCollectedAmunt = 0;
     public static List<GameObject> candles = new List<GameObject>();
     [SerializeField] candleAnable CandleAnable;
     [SerializeField] ParticleSystem fireParticles;
     [SerializeField] GameObject directionalLight;
     private float _fireEmission;
-    public static int ArielCounter = 0;
+    public static bool PlayerDied = false;
 
 
+    //ignition variables
+    [SerializeField] float ignitionTime = 3f;
+    private playermovement movementScript;
+
+    //Starting Text
+    [SerializeField] TextMeshProUGUI ignitionText;
 
     private float _timePassed;
     // Start is called before the first frame update
     void Start()
     {
-        maxhealth = 1;
+        if (PlayerDied)
+        {
+            if (ignitionText != null)
+                ignitionText.gameObject.SetActive(false);
+            //testing Ignition at start.
+            movementScript = GetComponent<playermovement>();
+            if (movementScript != null)
+                movementScript.enabled = false;
+
+            // Stop fire if it plays on Awake
+            if (fireParticles != null)
+                fireParticles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+
+            // Start ignition sequence
+            StartCoroutine(IgniteAndStartGame());
+        }
+        else
+        {
+            if (movementScript != null)
+                movementScript.enabled = true;
+        }
+            //------------------------------------------------------------------------
+
+
+            maxhealth = 1;
         remainingTime = lifeTime;
         candleLight.intensity = maxintesenty;
         _fireEmission = fireParticles.emission.rateOverTime.constant;
         health = maxhealth;
 
-        directionalLight.SetActive(false);
+        //directionalLight.SetActive(false);
 
 
     }
@@ -42,6 +75,10 @@ public class FireHealth : MonoBehaviour
         healthReduse();
         candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
         fireParticles.emissionRate = (remainingTime / lifeTime) * _fireEmission;
+        if(remainingTime < 0)
+        {
+            RestartGame();
+        }
     }
   
 
@@ -55,8 +92,9 @@ public class FireHealth : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Campfire"))
         {
-            remainingTime = lifeTime;
-            candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
+            print("candles.Count is " + candles.Count);
+            //remainingTime = lifeTime;
+            //candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
 
             if (candles != null && candles.Count > 0)
             {
@@ -64,9 +102,12 @@ public class FireHealth : MonoBehaviour
                 {
                     CandleAnable.AddCandle();
                     candle.SetActive(false);
-                    maxhealth += 0.5f;
+                    lifeTime = lifeTime * multiplier;
+                    remainingTime = lifeTime;
+                    candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
+                    maxhealth = maxhealth * multiplier;
                     health = maxhealth;
-                    print("ArielCounterIs: " + ArielCounter);
+                    candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
                 }
                 //print("bbbbbbbbbbbbbbbbbbbb");
 
@@ -91,5 +132,60 @@ public class FireHealth : MonoBehaviour
         candles.Add(candle);
 
 
-    } 
+    }
+    public void RestartGame()
+    {
+        PlayerDied = true;
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
+
+    }
+    IEnumerator IgniteAndStartGame()
+    {
+        //Setup for fade out, cause chatGPT told me
+        ignitionText.color = new Color(
+            ignitionText.color.r,
+            ignitionText.color.g,
+            ignitionText.color.b,
+            1f
+        );
+        ignitionText.gameObject.SetActive(true);
+
+
+        //Activate text
+        if (ignitionText != null)
+            ignitionText.gameObject.SetActive(true);
+
+        // Activate fire particle effect
+        if (fireParticles != null)
+            fireParticles.Play();
+
+        // Wait for ignition duration
+        yield return new WaitForSeconds(ignitionTime);
+        
+        //Fade out message
+        if (ignitionText != null)
+            StartCoroutine(FadeOutText(ignitionText, 1f));
+
+        // Enable player movement
+        if (movementScript != null)
+            movementScript.enabled = true;
+
+        Debug.Log("Player candle is ignited! Game started!");
+    }
+    IEnumerator FadeOutText(TextMeshProUGUI text, float duration)
+    {
+        Color startColor = text.color;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, time / duration);
+            text.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+            yield return null;
+        }
+
+        text.gameObject.SetActive(false);
+    }
 }
