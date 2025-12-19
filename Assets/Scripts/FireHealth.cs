@@ -40,7 +40,8 @@ public class FireHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.visible = false;
+
         if (PlayerDied)
         {
             if (ignitionText != null)
@@ -76,10 +77,10 @@ public class FireHealth : MonoBehaviour
     }
     private void Update()
     {
-        /*if (Input.GetKey(KeyCode.L))
+        if (Input.GetKey(KeyCode.Escape))
         {
-            CandleAnable.AddCandle();
-        }*/
+            Application.Quit();
+        }
         healthReduse();
         candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
         fireParticles.emissionRate = (remainingTime / lifeTime) * _fireEmission;

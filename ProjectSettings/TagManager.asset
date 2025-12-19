@@ -6,6 +6,7 @@ TagManager:
   tags:
   - AICandle
   - Campfire
+  - soundtrigger
   layers:
   - Default
   - TransparentFX
