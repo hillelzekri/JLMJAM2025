@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Collections;
 
 public class FireHealth : MonoBehaviour
 {
@@ -64,7 +65,6 @@ public class FireHealth : MonoBehaviour
             //------------------------------------------------------------------------
 
 
-            maxhealth = 1;
         remainingTime = lifeTime;
         candleLight.intensity = maxintesenty;
         _fireEmission = fireParticles.emission.rateOverTime.constant;
@@ -112,8 +112,6 @@ public class FireHealth : MonoBehaviour
                     lifeTime = lifeTime * multiplier;
                     remainingTime = lifeTime;
                     candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
-                    maxhealth = maxhealth * multiplier;
-                    health = maxhealth;
                     candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
                 }
                 //print("bbbbbbbbbbbbbbbbbbbb");
