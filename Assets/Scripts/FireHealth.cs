@@ -66,8 +66,6 @@ public class FireHealth : MonoBehaviour
                 {
                     CandleAnable.AddCandle();
                     candle.SetActive(false);
-                    maxhealth += 0.5f;
-                    health = maxhealth;
                     print("ArielCounterIs: " + ArielCounter);
                 }
                 //print("bbbbbbbbbbbbbbbbbbbb");
