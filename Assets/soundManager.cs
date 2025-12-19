@@ -5,10 +5,11 @@ using UnityEngine;
 public class soundManager : MonoBehaviour
 {
     [SerializeField] AudioClip maintrack;
+    [SerializeField] AudioClip libary;
     [SerializeField] AudioClip CollectClip;
     [SerializeField] AudioClip StartingLevelClip;
     [SerializeField] AudioClip EndGameClip;
-    [SerializeField] AudioClip ButtonClickClip;
+    [SerializeField] AudioClip cumpclip;
     [SerializeField] AudioClip Timer;
     AudioSource audioSource;
     public static soundManager Instance;
@@ -44,8 +45,8 @@ public class soundManager : MonoBehaviour
             case "endlevel":
                 audioSource.PlayOneShot(EndGameClip);
                 break;
-            case "click":
-                audioSource.PlayOneShot(ButtonClickClip);
+            case "cumpclip":
+                audioSource.PlayOneShot(cumpclip);
                 break;
             case "timersound":
                 audioSource.PlayOneShot(Timer);
@@ -54,7 +55,11 @@ public class soundManager : MonoBehaviour
                 int randomIndex = Random.Range(0, footsteps.Count);
                 audioSource.PlayOneShot(footsteps[randomIndex]);
                 break;
+            case "libary":
+                audioSource.PlayOneShot(libary);
+                return;
 
         }
+
     }
 }

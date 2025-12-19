@@ -28,7 +28,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717920285100099586}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99966484, z: -0, w: 0.025888277}
+  m_LocalRotation: {x: 0, y: 0.99966484, z: 0, w: 0.02588912}
   m_LocalPosition: {x: 33.2, y: 0, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -51,10 +51,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 673699ee2495e9547b229fae430ba3b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rotationSpeed: 1
-  Speed: 3
+  rotationSpeed: 720
+  Speed: 5
   CameraTransform: {fileID: 0}
   timeBetweenSteps: 0.5
+  jumpForce: 5
 --- !u!114 &3243423865249435989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,13 +68,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 853dbaf8d026df04d9f2953d4e7c29fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxhealth: 1.5
   remainingTime: 0
   candleLight: {fileID: 3725430427794644316}
   maxintesenty: 3
   lifeTime: 30
+  multiplier: 1.1
   CandleAnable: {fileID: 0}
   fireParticles: {fileID: 6491089066698974700}
+  directionalLight: {fileID: 0}
+  lustCheckPoint: {fileID: 0}
+  ignitionTime: 3
+  ignitionText: {fileID: 0}
 --- !u!136 &7168330948388320153
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -277,6 +282,7 @@ MonoBehaviour:
   Speed: 3
   CameraTransform: {fileID: 0}
   timeBetweenSteps: 0.5
+  jumpForce: 5
 --- !u!114 &1003808897325288794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,13 +295,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 853dbaf8d026df04d9f2953d4e7c29fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxhealth: 1.5
   remainingTime: 0
   candleLight: {fileID: 3725430427794644316}
   maxintesenty: 3
   lifeTime: 30
+  multiplier: 1.1
   CandleAnable: {fileID: 0}
   fireParticles: {fileID: 0}
+  directionalLight: {fileID: 0}
+  lustCheckPoint: {fileID: 0}
+  ignitionTime: 3
+  ignitionText: {fileID: 0}
 --- !u!1 &8816723838513834316
 GameObject:
   m_ObjectHideFlags: 0

@@ -76,18 +76,28 @@ public class FireHealth : MonoBehaviour
     }
     private void Update()
     {
-
+        /*if (Input.GetKey(KeyCode.L))
+        {
+            CandleAnable.AddCandle();
+        }*/
         healthReduse();
         candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
         fireParticles.emissionRate = (remainingTime / lifeTime) * _fireEmission;
      
-        if(remainingTime < 0)
+       /* if(remainingTime < 0)
         {
             RestartGame();
-        }
+        }*/
     }
-  
 
+    private void OnTriggerExit(Collider other)
+    {
+      /*  if (other.gameObject.CompareTag("soundtrigger"))
+        {
+            soundManager.Instance.playsounds("libary");
+
+        }*/
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("AICandle"))
@@ -96,6 +106,11 @@ public class FireHealth : MonoBehaviour
             candleLight.intensity = (remainingTime / lifeTime) * maxintesenty;
            
         }
+     /*   if (other.gameObject.CompareTag("soundtrigger"))
+        {
+            soundManager.Instance.playsounds("cumpclip");
+
+        }*/
         if (other.gameObject.CompareTag("Campfire"))
         {
             print("candles.Count is " + candles.Count);
@@ -150,13 +165,13 @@ public class FireHealth : MonoBehaviour
 
 
     }
-    public void RestartGame()
+ /*   public void RestartGame()
     {
         PlayerDied = true;
-        Scene currentScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(currentScene.name);
+    *//*    Scene currentScene = SceneManager.GetActiveScene();*/
+      /*  SceneManager.LoadScene(currentScene.name);*//*
 
-    }
+    }*/
     IEnumerator IgniteAndStartGame()
     {
         //Setup for fade out, cause chatGPT told me

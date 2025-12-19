@@ -47,7 +47,7 @@ public class playermovement : MonoBehaviour
     {
         float movex = Input.GetAxisRaw("Horizontal");
         float movez = Input.GetAxisRaw("Vertical");
-
+       
 
         Vector3 movement = new Vector3(movex, 0, movez);
 
@@ -70,7 +70,7 @@ public class playermovement : MonoBehaviour
             stepTimer -= Time.deltaTime;
             if (stepTimer < 0)
             {
-                //soundManager.Instance.playsounds("footstep");
+                soundManager.Instance.playsounds("footstep");
                 stepTimer = timeBetweenSteps;
             }
         }

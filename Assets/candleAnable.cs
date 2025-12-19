@@ -10,8 +10,6 @@ public class candleAnable : MonoBehaviour
     {
         if (AllLighted())
         {
-           
-           
             return;
         }
         int i = 0;
